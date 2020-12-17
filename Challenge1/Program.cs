@@ -14,7 +14,7 @@ namespace Challenge1
         /// <returns>all the missing elements</returns>
         public static IEnumerable<double> Solve(IList<double> numbers, int missingCount)
         {
-            if (missingCount == 0 || numbers.Count <= 2)
+            if (missingCount == 0 || numbers.Count < 2)
             {
                 yield break;
             }
@@ -74,8 +74,8 @@ namespace Challenge1
     {
         public static void Main(string[] args)
         {
-            var shuffledList = new List<double> { 77, 66, 55, 11, 44};
-            const int missingItemsCount = 2;
+            var shuffledList = new List<double> { 55, -53};
+            const int missingItemsCount = 3;
 
             foreach (var missingNumber in ProblemSolver.Solve(shuffledList, missingItemsCount))
             {
