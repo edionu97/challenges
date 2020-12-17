@@ -74,8 +74,8 @@ namespace Challenge1
     {
         public static void Main(string[] args)
         {
-            var shuffledList = new List<double> { 55, -53};
-            const int missingItemsCount = 3;
+            var shuffledList = new List<double> { 17, 29,11,5,14,26,8};
+            const int missingItemsCount = 2;
 
             foreach (var missingNumber in ProblemSolver.Solve(shuffledList, missingItemsCount))
             {
