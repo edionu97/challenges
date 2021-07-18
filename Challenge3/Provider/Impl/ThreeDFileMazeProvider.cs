@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Challenge3.Helpers;
+using Challenge3.Helpers.Items;
 
 namespace Challenge3.Provider.Impl
 {
     public class ThreeDFileMazeProvider : IMazeProvider
     {
-        public (IEnumerable<(Point3d, int CellValue)>, int) Get3DMaze(FileInfo mazeFileInfo)
+        public (IEnumerable<(Point3d, int CellValue)>, int) Get3DMaze(FileInfo mazeFileInfoFile)
         {
             //get the reader
-            using var reader = new StreamReader(mazeFileInfo.OpenRead());
+            using var reader = new StreamReader(mazeFileInfoFile.OpenRead());
 
             //ignore the first line
             int.TryParse(reader.ReadLine(), out var n);

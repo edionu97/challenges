@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Challenge3.Helpers;
+﻿using System.Linq;
+using Challenge3.Helpers.Items;
+using System.Collections.Generic;
 
 namespace Challenge3.Solver.Impl
 {
@@ -11,18 +11,18 @@ namespace Challenge3.Solver.Impl
         /// </summary>
         /// <param name="matrix">the maze matrix</param>
         /// <param name="to">the two</param>
+        /// <param name="hashSet">the visited collection</param>
         /// <returns>true or false</returns>
-        private static bool IsMoveValid(IDictionary<Point3d, int> matrix, Point3d to, ISet<Point3d> _hashSet)
+        private static bool IsMoveValid(IDictionary<Point3d, int> matrix, Point3d to, ICollection<Point3d> hashSet)
         {
             //if the new point it is not located into the matrix the move (from => to) is invalid
-            //if th
             if (!matrix.ContainsKey(to))
             {
                 return false;
             }
 
             //if the node is already visited the move is invalid
-            if (_hashSet.Contains(to))
+            if (hashSet.Contains(to))
             {
                 return false;
             }
@@ -62,7 +62,6 @@ namespace Challenge3.Solver.Impl
                 .ToDictionary(
                     keySelector => keySelector.Point,
                     valueSelector => valueSelector.CellValue);//get the exit cell coordinates
-
 
             //get the ending point
             var endingPoint = coordinatesToCellValue

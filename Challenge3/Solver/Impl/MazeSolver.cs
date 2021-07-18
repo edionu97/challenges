@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Challenge3.Helpers;
 using System.Collections.Generic;
+using Challenge3.Helpers.Items;
 
 namespace Challenge3.Solver.Impl
 {
@@ -105,8 +106,14 @@ namespace Challenge3.Solver.Impl
             return (ReconstructPath(endPoint), _distanceToLocationFromStartingPoint[endPoint]);
         }
 
-        private void 
-            InitializeDistanceAndHeuristics(IDictionary<Point3d, int> matrix, Point3d startingPoint, Point3d endPoint)
+        /// <summary>
+        /// This method it is used for initializing the distance matrices
+        /// </summary>
+        /// <param name="matrix">the maze matrix</param>
+        /// <param name="startingPoint">the starting point</param>
+        /// <param name="endPoint">the ending point</param>
+        private void InitializeDistanceAndHeuristics(
+            IDictionary<Point3d, int> matrix, Point3d startingPoint, Point3d endPoint)
         {
             //initialize the distance vector
             foreach (var key in matrix.Keys)

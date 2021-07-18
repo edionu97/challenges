@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Challenge3.Helpers;
+using Challenge3.Helpers.Items;
 
 namespace Challenge3.Solver.Impl
 {

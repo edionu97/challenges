@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Challenge3.Helpers
+namespace Challenge3.Helpers.Items
 {
     public class Point3d
     {
@@ -49,7 +49,7 @@ namespace Challenge3.Helpers
 
        public override string ToString()
        {
-           return $"({X}, {Y}, {Z})";
+           return $"(x:{X}, y:{Y}, z:{Z})";
        }
     }
 }

@@ -2,21 +2,22 @@
 using System.IO;
 using Challenge3.Helpers;
 using System.Collections.Generic;
+using Challenge3.Helpers.Items;
 
 namespace Challenge3.Provider.Impl
 {
     public class TwoDToThreeDMazeProvider : IMazeProvider
     {
-        public (IEnumerable<(Point3d, int CellValue)>, int) Get3DMaze(FileInfo mazeFileInfo)
+        public (IEnumerable<(Point3d, int CellValue)>, int) Get3DMaze(FileInfo mazeFileInfoFile)
         {
             //get the reader
-            using var reader = new StreamReader(mazeFileInfo.OpenRead());
+            using var reader = new StreamReader(mazeFileInfoFile.OpenRead());
 
             //read the first line and get the number of rows / cols
             int.TryParse(reader.ReadLine(), out var n);
 
             //get the 3d maze
-            return (Get3DMaze(mazeFileInfo, n), n);
+            return (Get3DMaze(mazeFileInfoFile, n), n);
         }
 
         private static IEnumerable<(Point3d, int CellValue)> 

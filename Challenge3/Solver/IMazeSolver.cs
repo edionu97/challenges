@@ -1,4 +1,4 @@
-﻿using Challenge3.Helpers;
+﻿using Challenge3.Helpers.Items;
 using System.Collections.Generic;
 
 namespace Challenge3.Solver
