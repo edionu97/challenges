@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingProblem", "ParkingProblem.csproj", "{FEE305D6-72D0-4678-99CA-63F96AFC5839}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingProblem.DataReading", "..\ParkingProblem.DataReading\ParkingProblem.DataReading.csproj", "{6214C67E-0DC4-42CB-9CDC-32E6E0FCDD89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingProblem.Solver", "..\ParkingProblem.Solver\ParkingProblem.Solver.csproj", "{FFDF064E-A970-42CF-BC37-E9D990C0178F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingProblem.Utility", "..\ParkingProblem.Utility\ParkingProblem.Utility.csproj", "{C1953DAC-2E54-476D-9F69-66117C315E20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEE305D6-72D0-4678-99CA-63F96AFC5839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEE305D6-72D0-4678-99CA-63F96AFC5839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEE305D6-72D0-4678-99CA-63F96AFC5839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEE305D6-72D0-4678-99CA-63F96AFC5839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6214C67E-0DC4-42CB-9CDC-32E6E0FCDD89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6214C67E-0DC4-42CB-9CDC-32E6E0FCDD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6214C67E-0DC4-42CB-9CDC-32E6E0FCDD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6214C67E-0DC4-42CB-9CDC-32E6E0FCDD89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFDF064E-A970-42CF-BC37-E9D990C0178F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFDF064E-A970-42CF-BC37-E9D990C0178F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFDF064E-A970-42CF-BC37-E9D990C0178F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFDF064E-A970-42CF-BC37-E9D990C0178F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1953DAC-2E54-476D-9F69-66117C315E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1953DAC-2E54-476D-9F69-66117C315E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1953DAC-2E54-476D-9F69-66117C315E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1953DAC-2E54-476D-9F69-66117C315E20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5FAFD90-BA9F-48CF-B56D-3A165FA307E0}
+	EndGlobalSection
+EndGlobal

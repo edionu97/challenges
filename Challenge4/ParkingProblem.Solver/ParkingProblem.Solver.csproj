@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ParkingProblem.DataReading\ParkingProblem.DataReading.csproj" />
+    <ProjectReference Include="..\ParkingProblem.Utility\ParkingProblem.Utility.csproj" />
+  </ItemGroup>
+
+</Project>
