@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SetiEncoderDecoder.Mappings", "SetiEncoderDecoder.Mappings\SetiEncoderDecoder.Mappings.csproj", "{E57E88ED-8ADC-462E-BF08-061E4899EED8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SetiEncoderDecoder.App", "SetiEncoderDecoder.App\SetiEncoderDecoder.App.csproj", "{CFD8440A-FF66-4EB0-B5D5-C450EDAD27D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SetiEncoderDecoder.Decoder", "SetiEncoderDecoder.Decoder\SetiEncoderDecoder.Decoder.csproj", "{F984B864-5698-42D0-B617-9AF38C39BE48}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SetiEncoderDecoder.Encoder", "SetiEncoderDecoder.Encoder\SetiEncoderDecoder.Encoder.csproj", "{3B88ACF1-BDBB-4E8C-9888-832766B3277A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetiEncoderDecoder.UnitTests", "SetiEncoderDecoder.UnitTests\SetiEncoderDecoder.UnitTests.csproj", "{F6332BF4-9C15-43DD-A2A2-A0EA6815B9C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E57E88ED-8ADC-462E-BF08-061E4899EED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E57E88ED-8ADC-462E-BF08-061E4899EED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E57E88ED-8ADC-462E-BF08-061E4899EED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E57E88ED-8ADC-462E-BF08-061E4899EED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFD8440A-FF66-4EB0-B5D5-C450EDAD27D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD8440A-FF66-4EB0-B5D5-C450EDAD27D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFD8440A-FF66-4EB0-B5D5-C450EDAD27D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD8440A-FF66-4EB0-B5D5-C450EDAD27D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F984B864-5698-42D0-B617-9AF38C39BE48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F984B864-5698-42D0-B617-9AF38C39BE48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F984B864-5698-42D0-B617-9AF38C39BE48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F984B864-5698-42D0-B617-9AF38C39BE48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B88ACF1-BDBB-4E8C-9888-832766B3277A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B88ACF1-BDBB-4E8C-9888-832766B3277A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B88ACF1-BDBB-4E8C-9888-832766B3277A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B88ACF1-BDBB-4E8C-9888-832766B3277A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6332BF4-9C15-43DD-A2A2-A0EA6815B9C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6332BF4-9C15-43DD-A2A2-A0EA6815B9C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6332BF4-9C15-43DD-A2A2-A0EA6815B9C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6332BF4-9C15-43DD-A2A2-A0EA6815B9C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D56D88EB-906F-423E-B40E-49B272ABF617}
+	EndGlobalSection
+EndGlobal
