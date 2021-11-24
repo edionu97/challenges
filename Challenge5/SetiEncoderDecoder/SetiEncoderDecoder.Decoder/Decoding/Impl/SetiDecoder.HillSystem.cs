@@ -31,15 +31,10 @@ namespace SetiEncoderDecoder.Decoder.Decoding.Impl
                     continue;
                 }
 
-                if (messageElements[symbol] != 1)
-                {
-
-                }
-
                 //get symbol count
                 var symbolCount = messageElements[symbol] > 1 
                     ? messageElements[symbol].ToString() 
-                    : string.Empty ;
+                    : string.Empty;
 
                 //create the decoded string
                 builder.Append($"{symbol}{symbolCount}");
