@@ -31,6 +31,11 @@ namespace CelestialObjectCatalog.Persistence.Context
                         .HasIndex(ds => ds.StateOwner)
                         .IsClustered(false)
                         .HasDatabaseName("IX_DiscoverySources_StateOwner");
+
+                    //add unique index on name
+                    entity
+                        .HasIndex(ds => ds.Name)
+                        .IsUnique();
                 });
 
             //celestial object
