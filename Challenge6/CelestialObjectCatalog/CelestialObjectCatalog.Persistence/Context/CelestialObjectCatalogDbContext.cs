@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using CelestialObjectCatalog.Persistence.Models;
+using Microsoft.Extensions.Logging;
 
 namespace CelestialObjectCatalog.Persistence.Context
 {
@@ -9,7 +11,25 @@ namespace CelestialObjectCatalog.Persistence.Context
 
         public DbSet<DiscoverySource> DiscoverySources { get; set; }
 
-        public DbSet<CelestialObjectDiscovery> CelestialObjectDiscoveries{ get; set; }
+        public DbSet<CelestialObjectDiscovery> CelestialObjectDiscoveries { get; set; }
+
+
+        public CelestialObjectCatalogDbContext(DbContextOptions<CelestialObjectCatalogDbContext> options)
+            : base(options)
+        {
+
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //enable logging
+            optionsBuilder
+                .LogTo(
+                    Console.WriteLine, 
+                    new[] {DbLoggerCategory.Database.Command.Name}, 
+                    LogLevel.Information)
+                .EnableSensitiveDataLogging();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -92,12 +112,6 @@ namespace CelestialObjectCatalog.Persistence.Context
                         .Property(cod => cod.DiscoveryDate)
                         .HasDefaultValueSql("GETDATE()");
                 });
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .UseSqlServer(@"Data Source=DESKTOP-VQ4KD11;Initial Catalog=CelestialObjectCatalog;Integrated Security=True;");
         }
     }
 }

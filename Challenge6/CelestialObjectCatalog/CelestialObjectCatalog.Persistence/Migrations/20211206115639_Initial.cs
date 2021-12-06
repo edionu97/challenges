@@ -28,7 +28,7 @@ namespace CelestialObjectCatalog.Persistence.Migrations
                 columns: table => new
                 {
                     DiscoverySourceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     EstablishmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     StateOwner = table.Column<string>(type: "nvarchar(450)", nullable: true)
@@ -79,6 +79,13 @@ namespace CelestialObjectCatalog.Persistence.Migrations
                 table: "CelestialObjects",
                 column: "Type")
                 .Annotation("SqlServer:Clustered", false);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DiscoverySources_Name",
+                table: "DiscoverySources",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DiscoverySources_StateOwner",

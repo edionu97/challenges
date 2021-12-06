@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CelestialObjectCatalog.Persistence.Migrations
 {
     [DbContext(typeof(CelestialObjectCatalogDbContext))]
-    [Migration("20211206105537_unique-name-column")]
-    partial class uniquenamecolumn
+    [Migration("20211206115639_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
