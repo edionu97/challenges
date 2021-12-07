@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="CelestialObject\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CelestialObjectCatalog.Persistence.Models\CelestialObjectCatalog.Persistence.Models.csproj" />
+    <ProjectReference Include="..\CelestialObjectCatalog.Persistence\CelestialObjectCatalog.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

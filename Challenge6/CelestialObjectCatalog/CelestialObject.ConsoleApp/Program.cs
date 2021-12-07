@@ -12,6 +12,8 @@ using CelestialObjectCatalog.Persistence.Repository.Impl;
 using CelestialObjectCatalog.Persistence.Repository.Impl.Abstract;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
 using CelestialObjectCatalog.Persistence.UnitOfWork.Impl;
+using CelestialObjectCatalog.Services.Source;
+using CelestialObjectCatalog.Services.Source.Impl;
 using CelestialObjectCatalog.Utility.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -82,22 +84,22 @@ namespace CelestialObject.ConsoleApp
                 .As<IUnitOfWork>()
                 .SingleInstance();//replace with instance per request
 
+            containerBuilder
+                .RegisterType<DiscoverySourceService>()
+                .As<IDiscoverySourceService>()
+                .SingleInstance();
+
 
             var container = containerBuilder.Build();
 
-            var unitOfWork = container.Resolve<IUnitOfWork>();
+            var service = container.Resolve<IDiscoverySourceService>();
 
-            var optionalItem = 
-                await unitOfWork.DiscoverySourceRepo.GetDiscoverySourceByNameAsync("Hubble Space Telescope");
+            var i = await service.FindDiscoverySourceByPartialName("e");
 
-            var item = optionalItem.Single();
-
-            item.Type = DiscoverySourceType.Other;
-
-            await unitOfWork.DiscoverySourceRepo.UpdateAsync(item);
-
-            await unitOfWork.CommitAsync();
-
+            foreach (var item in await service.GetAllAsync())
+            {
+                Console.WriteLine(item.Name + " " + item.Type);
+            }
 
         }
     }

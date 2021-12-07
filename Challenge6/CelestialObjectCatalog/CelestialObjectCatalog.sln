@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CelestialObjectCatalog.Pers
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CelestialObject.ConsoleApp", "CelestialObject.ConsoleApp\CelestialObject.ConsoleApp.csproj", "{6F4BCF30-8D7B-45CA-BEE4-0EBEB41C1574}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelestialObjectCatalog.Utility", "CelestialObjectCatalog.Utility\CelestialObjectCatalog.Utility.csproj", "{645A1068-E4FC-41A0-B14A-B941AFDFBB50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CelestialObjectCatalog.Utility", "CelestialObjectCatalog.Utility\CelestialObjectCatalog.Utility.csproj", "{645A1068-E4FC-41A0-B14A-B941AFDFBB50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelestialObjectCatalog.Services", "CelestialObjectCatalog.Services\CelestialObjectCatalog.Services.csproj", "{31AF6BB0-3F07-4EF5-B017-9D8285A20608}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{645A1068-E4FC-41A0-B14A-B941AFDFBB50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{645A1068-E4FC-41A0-B14A-B941AFDFBB50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{645A1068-E4FC-41A0-B14A-B941AFDFBB50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31AF6BB0-3F07-4EF5-B017-9D8285A20608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31AF6BB0-3F07-4EF5-B017-9D8285A20608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31AF6BB0-3F07-4EF5-B017-9D8285A20608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31AF6BB0-3F07-4EF5-B017-9D8285A20608}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

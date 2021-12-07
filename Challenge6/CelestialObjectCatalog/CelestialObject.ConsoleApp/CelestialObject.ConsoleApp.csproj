@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CelestialObjectCatalog.Persistence\CelestialObjectCatalog.Persistence.csproj" />
+    <ProjectReference Include="..\CelestialObjectCatalog.Services\CelestialObjectCatalog.Services.csproj" />
   </ItemGroup>
 
 </Project>
