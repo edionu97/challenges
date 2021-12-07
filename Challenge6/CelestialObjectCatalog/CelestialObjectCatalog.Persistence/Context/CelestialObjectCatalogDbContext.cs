@@ -26,7 +26,10 @@ namespace CelestialObjectCatalog.Persistence.Context
             optionsBuilder
                 .LogTo(
                     Console.WriteLine, 
-                    new[] {DbLoggerCategory.Database.Command.Name}, 
+                    new[]
+                    {
+                        DbLoggerCategory.Database.Command.Name
+                    }, 
                     LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }

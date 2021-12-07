@@ -60,7 +60,7 @@ namespace CelestialObjectCatalog.Persistence.Repository
         /// </summary>
         /// <param name="predicate">The predicate</param>
         /// <returns>A list of items that respects that predicate</returns>
-        public Task<Maybe<IEnumerable<TEntity>>> FindAsync(
+        public Task<IEnumerable<TEntity>> FindAsync(
             Expression<Func<TEntity, bool>> predicate);
     }
 }

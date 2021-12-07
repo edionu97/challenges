@@ -7,7 +7,11 @@ using Autofac;
 using CelestialObjectCatalog.Persistence.Context;
 using CelestialObjectCatalog.Persistence.Models;
 using CelestialObjectCatalog.Persistence.Models.Enums;
-using CelestialObjectCatalog.Persistence.Repository.Abstract;
+using CelestialObjectCatalog.Persistence.Repository;
+using CelestialObjectCatalog.Persistence.Repository.Impl;
+using CelestialObjectCatalog.Persistence.Repository.Impl.Abstract;
+using CelestialObjectCatalog.Persistence.UnitOfWork;
+using CelestialObjectCatalog.Persistence.UnitOfWork.Impl;
 using CelestialObjectCatalog.Utility.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -55,27 +59,44 @@ namespace CelestialObject.ConsoleApp
             containerBuilder
                 .RegisterType<CelestialObjectCatalogDbContext>()
                 .AsSelf()
+                .As<DbContext>()
+                .SingleInstance();//replace with instance per request
+
+            containerBuilder
+                .RegisterType<DiscoverySourceRepository>()
+                .As<IDiscoverySourceRepository>()
                 .InstancePerDependency();
 
-            var services = containerBuilder.Build();
+            containerBuilder
+                .RegisterType<CelestialObjectDiscoveryRepository>()
+                .As<IRepository<CelestialObjectDiscovery, Guid>>()
+                .InstancePerDependency();
+
+            containerBuilder
+                .RegisterType<CelestialObjectRepository>()
+                .As<ICelestialObjectRepository>()
+                .InstancePerDependency();
+
+            containerBuilder
+                .RegisterType<UnitOfWork>()
+                .As<IUnitOfWork>()
+                .SingleInstance();//replace with instance per request
 
 
-            //resolve db context
-            var dbContext = services.Resolve<CelestialObjectCatalogDbContext>();
+            var container = containerBuilder.Build();
 
-            var repo = new AbstractRepository<DiscoverySource, Guid>(dbContext);
+            var unitOfWork = container.Resolve<IUnitOfWork>();
 
-            //await repo.AddAsync(new DiscoverySource
-            //{
-            //    EstablishmentDate = DateTime.Now,
-            //    Name = "eduardo",
-            //    StateOwner = "USa",
-            //    Type = DiscoverySourceType.GroundTelescope
-            //});
+            var optionalItem = 
+                await unitOfWork.DiscoverySourceRepo.GetDiscoverySourceByNameAsync("Hubble Space Telescope");
 
-            var a = await repo.GetAllAsync();
+            var item = optionalItem.Single();
 
-            var r = await a.FirstAsync(x => x.Name == "eduardo");
+            item.Type = DiscoverySourceType.Other;
+
+            await unitOfWork.DiscoverySourceRepo.UpdateAsync(item);
+
+            await unitOfWork.CommitAsync();
 
 
         }

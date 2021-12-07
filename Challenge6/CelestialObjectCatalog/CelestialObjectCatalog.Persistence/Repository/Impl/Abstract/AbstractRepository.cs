@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using CelestialObjectCatalog.Persistence.Constants;
 using CelestialObjectCatalog.Persistence.Exceptions;
 using CelestialObjectCatalog.Utility.Helpers;
-using Microsoft.EntityFrameworkCore;
 using CelestialObjectCatalog.Utility.Items;
+using Microsoft.EntityFrameworkCore;
 
-namespace CelestialObjectCatalog.Persistence.Repository.Abstract
+namespace CelestialObjectCatalog.Persistence.Repository.Impl.Abstract
 {
     public abstract class AbstractRepository<TEntity, TId> :
         IRepository<TEntity, TId> where TEntity : class, new()
@@ -79,16 +79,14 @@ namespace CelestialObjectCatalog.Persistence.Repository.Abstract
                 : Maybe.Some(item);
         }
 
-        public async Task<Maybe<IEnumerable<TEntity>>> FindAsync(
+        public async Task<IEnumerable<TEntity>> FindAsync(
             Expression<Func<TEntity, bool>> predicate)
         {
             //get items
             var items = DbSet.Where(predicate);
 
             //if there are any items in list return 
-            return await items.AnyAsync()
-                ? Maybe.Some<IEnumerable<TEntity>>(await items.ToListAsync())
-                : Maybe.None<IEnumerable<TEntity>>();
+            return await items.ToListAsync();
         }
 
         public IQueryable<TEntity> GetAllAsQueryable() => DbSet.AsQueryable();
