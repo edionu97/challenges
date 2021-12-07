@@ -2,8 +2,13 @@
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Autofac;
 using CelestialObjectCatalog.Persistence.Context;
+using CelestialObjectCatalog.Persistence.Models;
+using CelestialObjectCatalog.Persistence.Models.Enums;
+using CelestialObjectCatalog.Persistence.Repository.Abstract;
+using CelestialObjectCatalog.Utility.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -27,7 +32,7 @@ namespace CelestialObject.ConsoleApp
 
     public static class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var containerBuilder = new ContainerBuilder();
 
@@ -58,8 +63,19 @@ namespace CelestialObject.ConsoleApp
             //resolve db context
             var dbContext = services.Resolve<CelestialObjectCatalogDbContext>();
 
-            var a = dbContext.CelestialObjects.ToList();
+            var repo = new AbstractRepository<DiscoverySource, Guid>(dbContext);
 
+            //await repo.AddAsync(new DiscoverySource
+            //{
+            //    EstablishmentDate = DateTime.Now,
+            //    Name = "eduardo",
+            //    StateOwner = "USa",
+            //    Type = DiscoverySourceType.GroundTelescope
+            //});
+
+            var a = await repo.GetAllAsync();
+
+            var r = await a.FirstAsync(x => x.Name == "eduardo");
 
 
         }

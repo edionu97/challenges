@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CelestialObjectCatalog.Persistence.Models\CelestialObjectCatalog.Persistence.Models.csproj" />
+    <ProjectReference Include="..\CelestialObjectCatalog.Utility\CelestialObjectCatalog.Utility.csproj" />
   </ItemGroup>
 
 </Project>

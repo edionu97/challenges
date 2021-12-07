@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CelestialObjectCatalog.Utility.Attributes;
 using CelestialObjectCatalog.Persistence.Models.Enums;
 
 namespace CelestialObjectCatalog.Persistence.Models
@@ -12,6 +13,7 @@ namespace CelestialObjectCatalog.Persistence.Models
     // ReSharper disable once ClassNeverInstantiated.Global
     public class CelestialObject
     {
+        [UniqueIdentifier]
         public Guid CelestialObjectId { get; set; }
 
         public string Name { get; set; }

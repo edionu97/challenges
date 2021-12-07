@@ -1,4 +1,5 @@
 ﻿using System;
+using CelestialObjectCatalog.Utility.Attributes;
 
 namespace CelestialObjectCatalog.Persistence.Models
 {
@@ -9,9 +10,11 @@ namespace CelestialObjectCatalog.Persistence.Models
     // ReSharper disable once ClassNeverInstantiated.Global
     public class CelestialObjectDiscovery
     {
+        [UniqueIdentifier]
         public Guid CelestialObjectId { get; set; }
         public CelestialObject CelestialObject { get; set; }
 
+        [UniqueIdentifier]
         public Guid DiscoverySourceId { get; set; }
         public DiscoverySource DiscoverySource { get; set; }
 
