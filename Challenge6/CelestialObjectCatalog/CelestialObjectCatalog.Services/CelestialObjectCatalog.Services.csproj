@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CelestialObject\" />
+    <Folder Include="Celestial\" />
   </ItemGroup>
 
   <ItemGroup>
