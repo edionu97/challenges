@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Celestial\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CelestialObjectCatalog.Persistence.Models\CelestialObjectCatalog.Persistence.Models.csproj" />
     <ProjectReference Include="..\CelestialObjectCatalog.Persistence\CelestialObjectCatalog.Persistence.csproj" />
   </ItemGroup>

@@ -10,17 +10,17 @@ namespace CelestialObjectCatalog.Persistence.UnitOfWork.Impl
     {
         private readonly DbContext _dbContext;
 
-        public IDiscoverySourceRepository DiscoverySourceRepo { get; }
+        public IRepository<DiscoverySource, Guid> DiscoverySourceRepo { get; }
 
         public IRepository<CelestialObjectDiscovery, Guid> CelestialDiscoveriesRepo { get; }
 
-        public ICelestialObjectRepository CelestialObjectRepo { get; }
+        public IRepository<CelestialObject, Guid> CelestialObjectRepo { get; }
 
         public UnitOfWork(
             DbContext dbContext,
-            IDiscoverySourceRepository discoveryRepo,
+            IRepository<DiscoverySource, Guid> discoveryRepo,
             IRepository<CelestialObjectDiscovery, Guid> celestialDiscoveriesRepo,
-            ICelestialObjectRepository celestialObjectRepo)
+            IRepository<CelestialObject, Guid> celestialObjectRepo)
         {
             _dbContext = dbContext;
             DiscoverySourceRepo = discoveryRepo;

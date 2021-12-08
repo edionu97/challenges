@@ -8,11 +8,11 @@ namespace CelestialObjectCatalog.Persistence.UnitOfWork
 {
     public interface IUnitOfWork
     { 
-        public IDiscoverySourceRepository DiscoverySourceRepo { get; }
+        public IRepository<DiscoverySource, Guid> DiscoverySourceRepo { get; }
 
         public IRepository<CelestialObjectDiscovery, Guid> CelestialDiscoveriesRepo { get; }
 
-        public ICelestialObjectRepository CelestialObjectRepo { get; }
+        public IRepository<CelestialObject, Guid> CelestialObjectRepo { get; }
 
         public Task CommitAsync();
     }

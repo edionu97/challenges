@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using CelestialObjectCatalog.Persistence.Constants;
 using CelestialObjectCatalog.Persistence.Exceptions;
-using CelestialObjectCatalog.Utility.Helpers;
 using CelestialObjectCatalog.Utility.Items;
-using Microsoft.EntityFrameworkCore;
 
 namespace CelestialObjectCatalog.Persistence.Repository.Impl.Abstract
 {
-    public abstract class AbstractRepository<TEntity, TId> :
-        IRepository<TEntity, TId> where TEntity : class, new()
+    public abstract partial class AbstractRepository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, new()
     {
         // ReSharper disable once MemberCanBePrivate.Global
         protected DbSet<TEntity> DbSet { get; }
@@ -47,6 +45,7 @@ namespace CelestialObjectCatalog.Persistence.Repository.Impl.Abstract
             //remove entity
             DbSet.Remove(entity);
         }
+
         public async Task UpdateAsync(TEntity entity)
         {
             //check if entity exists
@@ -63,69 +62,50 @@ namespace CelestialObjectCatalog.Persistence.Repository.Impl.Abstract
             DbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        public async Task<Maybe<TEntity>> FindByIdAsync(params TId[] keyValues)
+        public async Task<Maybe<TEntity>> FindSingleAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] columnsToInclude)
         {
-            //get primary key values
-            var primaryKeyValues = keyValues
-                .Select(x => (object)x)
-                .ToArray();
+            //get all items
+            var items =
+                (await FindAllAsync(predicate, columnsToInclude)).ToList();
+            
+            //check the length
+            if (items.Count > 1)
+            {
+                throw new InvalidOperationException(
+                    "There is more than one matching for given pattern." +
+                    $" Restrict the pattern:'[{predicate}]' in order to obtain a single result");
+            }
 
-            //get the entity
-            var item = await DbSet.FindAsync(primaryKeyValues);
-
-            //if item is null return empty maybe
-            return item is null
+            //return either an empty maybe or nothing
+            return items.Count == 0
                 ? Maybe.None<TEntity>()
-                : Maybe.Some(item);
+                : Maybe.Some(items[0]);
         }
 
-        public async Task<IEnumerable<TEntity>> FindAsync(
-            Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> FindAllAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] columnsToInclude)
         {
-            //get items
-            var items = DbSet.Where(predicate);
+            //get items and also include fields
+            var items =
+                IncludeFields(
+                    DbSet.Where(predicate),
+                    columnsToInclude);
 
             //if there are any items in list return 
             return await items.ToListAsync();
         }
 
-        public IQueryable<TEntity> GetAllAsQueryable() => DbSet.AsQueryable();
+        
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync() => await DbSet.ToListAsync();
-       
+        public async Task<IEnumerable<TEntity>> GetAllAsync(
+            params Expression<Func<TEntity, object>>[] columnsToInclude)
+                => await IncludeFields(DbSet, columnsToInclude).ToListAsync();
 
-        /// <summary>
-        /// This method should be used for checking if an entity exists in repository
-        /// </summary>
-        /// <param name="entity">The entity that is checked</param>
-        /// <exception cref="ArgumentException">If the TEntity does not have a valid identifier</exception>
-        /// <returns>True if entity exists or false otherwise</returns>
-        protected virtual async Task<bool> CheckIfEntityExistsAsync(TEntity entity)
-        {
-            //try to get unique ids optional
-            var uniqueIdsOptional =
-                await ReflectionHelpers
-                    .GetObjectOrderedUniqueIdentifiersAsync<TId>(entity);
-
-            //check if unique identifiers could be extracted
-            if (!uniqueIdsOptional.Any())
-            {
-                throw new ArgumentException(
-                    string.Format(MessageConstants
-                        .UniqueIdsCannotBeComputedMessage, typeof(TId).FullName));
-            }
-
-            //get unique ids
-            var keyComponents = uniqueIdsOptional
-                .Single()
-                .ToArray();
-
-            //get item by keyValues
-            var maybeEntity =
-                await FindByIdAsync(keyComponents);
-
-            //return true if the element could be found or false otherwise 
-            return maybeEntity.Any();
-        }
+        public IQueryable<TEntity> GetAllAsQueryable(
+            params Expression<Func<TEntity, object>>[] columnsToInclude) 
+                => IncludeFields(DbSet, columnsToInclude);
     }
 }

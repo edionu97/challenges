@@ -14,7 +14,7 @@ namespace CelestialObjectCatalog.Services.Source.Impl
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        private readonly IDiscoverySourceRepository _discoverySourceRepository;
+        private readonly IRepository<DiscoverySource, Guid> _discoverySourceRepository;
 
         public DiscoverySourceService(IUnitOfWork unitOfWork)
         {
@@ -55,30 +55,16 @@ namespace CelestialObjectCatalog.Services.Source.Impl
         public Task<Maybe<DiscoverySource>>
             FindDiscoverySourceAsync(string discoverySourceName) =>
                 _discoverySourceRepository
-                    .GetDiscoverySourceByNameAsync(discoverySourceName);
+                    .FindSingleAsync(
+                        x => x.Name == discoverySourceName,
+                        x => x.CelestialObjectDiscoveries);
 
-        public async Task<Maybe<DiscoverySource>> 
-            FindDiscoverySourceByPartialName(string partialName)
-        {
-            //get items
-            var items =
-                (await _discoverySourceRepository
-                    .FindAsync(x => x.Name.Contains(partialName)))
-                .ToList();
-
-            //check the length
-            if (items.Count > 1)
-            {
-                throw new InvalidOperationException(
-                    "There is more than one matching for given pattern." +
-                    $" Restrict the pattern:'[{partialName}]' in order to obtain a single result");
-            }
-
-            //return either an empty maybe or nothing
-            return items.Count == 0
-                ? Maybe.None<DiscoverySource>()
-                : Maybe.Some(items[0]);
-        }
+        public Task<Maybe<DiscoverySource>>
+            FindDiscoverySourceByPartialName(string partialName) =>
+                _discoverySourceRepository
+                    .FindSingleAsync(
+                        x => x.Name.Contains(partialName),
+                        x => x.CelestialObjectDiscoveries);
 
         public Task<IEnumerable<DiscoverySource>> GetAllAsync() => _discoverySourceRepository.GetAllAsync();
     }

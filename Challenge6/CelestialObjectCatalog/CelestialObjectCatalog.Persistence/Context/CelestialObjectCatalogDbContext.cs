@@ -84,6 +84,11 @@ namespace CelestialObjectCatalog.Persistence.Context
                         .HasIndex(co => co.Type)
                         .IsClustered(false)
                         .HasDatabaseName("IX_CelestialObjects_Type");
+
+                    //define the unique index
+                    entity
+                        .HasIndex(x => x.Name)
+                        .IsUnique();
                 });
 
             //celestial object discovery

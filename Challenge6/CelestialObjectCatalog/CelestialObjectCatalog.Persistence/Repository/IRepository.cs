@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Collections.Generic;
-using CelestialObjectCatalog.Utility.Items;
 using CelestialObjectCatalog.Persistence.Exceptions;
+using CelestialObjectCatalog.Utility.Items;
 
 namespace CelestialObjectCatalog.Persistence.Repository
 {
@@ -39,28 +39,34 @@ namespace CelestialObjectCatalog.Persistence.Repository
         /// Get all elements from database
         /// </summary>
         /// <returns>A queryable instance which allows further queries on database</returns>
-        public IQueryable<TEntity> GetAllAsQueryable();
+        public IQueryable<TEntity> GetAllAsQueryable(
+            params Expression<Func<TEntity, object>>[] columnsToInclude);
 
         /// <summary>
         /// Gets all elements from database (loads all items in the memory)
         /// </summary>
         /// <returns>A list of items</returns>
-        public Task<IEnumerable<TEntity>> GetAllAsync();
-
-        /// <summary>
-        /// Find an element by it's key or composite key
-        /// </summary>
-        /// <param name="keyValues">Key elements</param>
-        /// <returns>An empty maybe if there is no element, or a maybe containing desired element</returns>
-        public Task<Maybe<TEntity>> 
-            FindByIdAsync(params TId[] keyValues);
+        public Task<IEnumerable<TEntity>> GetAllAsync(
+            params Expression<Func<TEntity, object>>[] columnsToInclude);
 
         /// <summary>
         /// Generic find method which filters database against a certain predicate
         /// </summary>
         /// <param name="predicate">The predicate</param>
+        /// <param name="columnsToInclude">A list of functions that describes which extra properties should be included</param>
         /// <returns>A list of items that respects that predicate</returns>
-        public Task<IEnumerable<TEntity>> FindAsync(
-            Expression<Func<TEntity, bool>> predicate);
+        public Task<IEnumerable<TEntity>> FindAllAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] columnsToInclude);
+
+        /// <summary>
+        /// This method should be used for finding a single object
+        /// </summary>
+        /// <param name="predicate">The predicate itself</param>
+        /// <param name="columnsToInclude">A list of functions that describes which extra properties should be included</param>
+        /// <returns>Either an empty maybe or a maybe instance containing a single element</returns>
+        public Task<Maybe<TEntity>> FindSingleAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] columnsToInclude);
     }
 }

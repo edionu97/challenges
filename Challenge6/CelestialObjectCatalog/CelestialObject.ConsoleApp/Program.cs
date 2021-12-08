@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ using CelestialObjectCatalog.Persistence.Repository.Impl;
 using CelestialObjectCatalog.Persistence.Repository.Impl.Abstract;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
 using CelestialObjectCatalog.Persistence.UnitOfWork.Impl;
+using CelestialObjectCatalog.Services.Celestial;
+using CelestialObjectCatalog.Services.Celestial.Impl;
 using CelestialObjectCatalog.Services.Source;
 using CelestialObjectCatalog.Services.Source.Impl;
 using CelestialObjectCatalog.Utility.Helpers;
@@ -40,6 +43,11 @@ namespace CelestialObject.ConsoleApp
     {
         public static async Task Main(string[] args)
         {
+
+            Expression<Func<DiscoverySource, object>> x = y => y.Name;
+
+            var a = x.ToString();
+            
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder
@@ -66,7 +74,7 @@ namespace CelestialObject.ConsoleApp
 
             containerBuilder
                 .RegisterType<DiscoverySourceRepository>()
-                .As<IDiscoverySourceRepository>()
+                .As<IRepository<DiscoverySource, Guid>>()
                 .InstancePerDependency();
 
             containerBuilder
@@ -76,7 +84,7 @@ namespace CelestialObject.ConsoleApp
 
             containerBuilder
                 .RegisterType<CelestialObjectRepository>()
-                .As<ICelestialObjectRepository>()
+                .As<IRepository<CelestialObjectCatalog.Persistence.Models.CelestialObject, Guid>>()
                 .InstancePerDependency();
 
             containerBuilder
@@ -89,18 +97,32 @@ namespace CelestialObject.ConsoleApp
                 .As<IDiscoverySourceService>()
                 .SingleInstance();
 
+            containerBuilder
+                .RegisterType<CelestialObjectService>()
+                .As<ICelestialObjectService>()
+                .SingleInstance();
+
 
             var container = containerBuilder.Build();
 
-            var service = container.Resolve<IDiscoverySourceService>();
+            var service = container.Resolve<ICelestialObjectService>();
 
-            var i = await service.FindDiscoverySourceByPartialName("e");
+            await service.AddAsync(
+                "aurora",
+                2.5e24,
+                24410000,
+                9800,
+                "Observatory"
+            );
 
-            foreach (var item in await service.GetAllAsync())
-            {
-                Console.WriteLine(item.Name + " " + item.Type);
-            }
+            ;
 
+
+        }
+
+        private static Expression<Func<DiscoverySource, T>> S<T>(Expression<Func<DiscoverySource, T>> x)
+        {
+            return x;
         }
     }
 }
