@@ -25,6 +25,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace CelestialObject.ConsoleApp
 {
+    using CelestialObject = CelestialObjectCatalog.Persistence.Models.CelestialObject;
 
     public class BloggingContextFactory : IDesignTimeDbContextFactory<CelestialObjectCatalogDbContext>
     {
@@ -135,6 +136,16 @@ namespace CelestialObject.ConsoleApp
 
             var classifier = container.Resolve<ICelestialObjectClassifier>();
 
+          
+
+            var r = classifier.Classify(new CelestialObject()
+            {
+                Name = "Kepler-37b",
+                Mass = BigDecimal.Parse("1.3e40"),
+                EquatorialDiameter = BigDecimal.Parse("11600000"),
+                SurfaceTemperature = BigDecimal.Parse("29000"),
+            });
+
             //await discoverySourceService.AddDiscoverySourceAsync("ana", DateTime.Now,
             //    DiscoverySourceType.GroundTelescope, "USA");
 
@@ -145,7 +156,7 @@ namespace CelestialObject.ConsoleApp
             //    , new BigDecimal(250),
             //    "ana");
 
-            var aaa = await celestialObjectService.GetAllAsync();
+            // var aaa = await celestialObjectService.GetAllAsync();
         }
 
         private static Expression<Func<DiscoverySource, T>> S<T>(Expression<Func<DiscoverySource, T>> x)

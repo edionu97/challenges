@@ -29,5 +29,21 @@ namespace CelestialObjectCatalog.Persistence.Models
 
         public ICollection<CelestialObjectDiscovery> CelestialObjectDiscoveries { get; set; }
             = new List<CelestialObjectDiscovery>();
+
+        /// <summary>
+        /// Deconstructs object into given parameters
+        /// </summary>
+        /// <param name="mass">The mass value</param>
+        /// <param name="equatorialDiameter">The diameter value</param>
+        /// <param name="surfaceTemperature">The temp value</param>
+        public void Deconstruct(
+            out BigDecimal mass, 
+            out BigDecimal equatorialDiameter, 
+            out BigDecimal surfaceTemperature)
+        {
+            mass = Mass;
+            equatorialDiameter = EquatorialDiameter;
+            surfaceTemperature = SurfaceTemperature;
+        }
     }
 }
