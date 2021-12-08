@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using CelestialObjectCatalog.Utility.Items;
 using CelestialObjectCatalog.Services.Source;
 using CelestialObjectCatalog.Persistence.Models;
-using CelestialObjectCatalog.Persistence.Repository;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
 using CelestialObjectCatalog.Persistence.Models.Enums;
 

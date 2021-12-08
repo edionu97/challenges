@@ -17,6 +17,8 @@ using CelestialObjectCatalog.Services.Celestial;
 using CelestialObjectCatalog.Services.Celestial.Impl;
 using CelestialObjectCatalog.Services.Source;
 using CelestialObjectCatalog.Services.Source.Impl;
+using CelestialObjectCatalog.Services.Statistics;
+using CelestialObjectCatalog.Services.Statistics.Impl;
 using CelestialObjectCatalog.Utility.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -102,21 +104,28 @@ namespace CelestialObject.ConsoleApp
                 .As<ICelestialObjectService>()
                 .SingleInstance();
 
+            containerBuilder
+                .RegisterType<CatalogStatisticsService>()
+                .As<IStatisticsService>()
+                .SingleInstance();
+
 
             var container = containerBuilder.Build();
 
-            var service = container.Resolve<ICelestialObjectService>();
-
-            //await service.AddAsync(
-            //    "aurora 2",
-            //    2.5e24,
-            //    24410000,
-            //    9800,
-            //    "Hubble"
-            //);
+            var service = container.Resolve<IStatisticsService>();
 
 
-            var l = await service.GetObjectsDiscoveredByCountryAsync("USA");
+            await container.Resolve<ICelestialObjectService>().AddAsync(
+                "aurora 3",
+                2.5e24,
+                24410000,
+                9800,
+                "Observatory"
+            );
+
+
+            var l = await service
+                .FindDiscoverySourcesWithMostObjectTypeDiscoveriesAsync(CelestialObjectType.Unknown);
 
 
         }
