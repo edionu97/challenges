@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using CelestialObjectCatalog.Utility.Items;
 using CelestialObjectCatalog.Persistence.Models;
 using CelestialObjectCatalog.Persistence.Exceptions;
 using CelestialObjectCatalog.Persistence.Models.Enums;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace CelestialObjectCatalog.Services.Celestial.Impl
 {
@@ -36,7 +32,7 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
             if (!optionalSource.Any())
             {
                 throw new EntityDoesNotExistException(
-                    $"Discovery source name like:[{namePattern}] " +
+                    $"Discovery source name like: [{namePattern}] " +
                     $"could not be found, reason it does not exist in database");
             }
 
@@ -45,7 +41,7 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
         }
 
         private async Task AddExtraDiscoverySourceAsync(
-            DiscoverySource discoverySource,
+            Guid discoverySourceId,
             CelestialObject celestialObject,
             DateTime discoveryDate)
         {
@@ -53,7 +49,7 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
             var isAlreadyDiscovered =
                 celestialObject
                     .CelestialObjectDiscoveries
-                    .Any(x => x.DiscoverySourceId == discoverySource.DiscoverySourceId);
+                    .Any(x => x.DiscoverySourceId == discoverySourceId);
 
             //do nothing is object is discovered
             if (isAlreadyDiscovered)
@@ -67,13 +63,15 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
                 .CelestialObjectDiscoveries
                 .Add(new CelestialObjectDiscovery
                 {
-                    DiscoverySourceId = discoverySource.DiscoverySourceId,
+                    DiscoverySourceId = discoverySourceId,
                     CelestialObjectId = celestialObject.CelestialObjectId,
                     DiscoveryDate = discoveryDate
                 });
 
             //update the object
-            await _celestialObjectRepository.UpdateAsync(celestialObject);
+            await _unitOfWork
+                .CelestialObjectRepo
+                .UpdateAsync(celestialObject);
         }
 
         private async Task CreateCelestialObjectAsync(
@@ -105,7 +103,9 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
                 });
 
             //add object into database
-            await _celestialObjectRepository.AddAsync(@object);
+            await _unitOfWork
+                .CelestialObjectRepo
+                .AddAsync(@object);
         }
 
     }

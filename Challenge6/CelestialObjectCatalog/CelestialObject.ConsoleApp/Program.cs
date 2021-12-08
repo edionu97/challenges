@@ -107,15 +107,16 @@ namespace CelestialObject.ConsoleApp
 
             var service = container.Resolve<ICelestialObjectService>();
 
-            await service.AddAsync(
-                "aurora",
-                2.5e24,
-                24410000,
-                9800,
-                "Observatory"
-            );
+            //await service.AddAsync(
+            //    "aurora 2",
+            //    2.5e24,
+            //    24410000,
+            //    9800,
+            //    "Hubble"
+            //);
 
-            ;
+
+            var l = await service.GetObjectsDiscoveredByCountryAsync("USA");
 
 
         }

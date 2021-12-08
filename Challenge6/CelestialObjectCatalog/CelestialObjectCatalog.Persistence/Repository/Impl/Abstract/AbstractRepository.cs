@@ -98,8 +98,6 @@ namespace CelestialObjectCatalog.Persistence.Repository.Impl.Abstract
             return await items.ToListAsync();
         }
 
-        
-
         public async Task<IEnumerable<TEntity>> GetAllAsync(
             params Expression<Func<TEntity, object>>[] columnsToInclude)
                 => await IncludeFields(DbSet, columnsToInclude).ToListAsync();

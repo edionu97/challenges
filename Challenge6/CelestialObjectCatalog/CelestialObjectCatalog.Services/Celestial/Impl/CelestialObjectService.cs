@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using CelestialObjectCatalog.Persistence.Exceptions;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using CelestialObjectCatalog.Utility.Items;
+using CelestialObjectCatalog.Services.Source;
 using CelestialObjectCatalog.Persistence.Models;
-using CelestialObjectCatalog.Persistence.Models.Enums;
 using CelestialObjectCatalog.Persistence.Repository;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
-using CelestialObjectCatalog.Services.Source;
-using CelestialObjectCatalog.Utility.Items;
-using Microsoft.EntityFrameworkCore;
+using CelestialObjectCatalog.Persistence.Models.Enums;
 
 namespace CelestialObjectCatalog.Services.Celestial.Impl
 {
@@ -20,44 +18,40 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
 
         private readonly IDiscoverySourceService _discoverySourceService;
 
-        private readonly IRepository<CelestialObject, Guid> _celestialObjectRepository;
-
         public CelestialObjectService(
-            IUnitOfWork unitOfWork, 
-            IDiscoverySourceService discoverySourceService,
-            IRepository<CelestialObject, Guid> celestialObjectRepository)
+            IUnitOfWork unitOfWork,
+            IDiscoverySourceService discoverySourceService)
         {
             _unitOfWork = unitOfWork;
             _discoverySourceService = discoverySourceService;
-            _celestialObjectRepository = celestialObjectRepository;
         }
 
         public async Task AddAsync(
-            string objectName, 
-            double objectMass, 
-            double objectDiameter, 
+            string objectName,
+            double objectMass,
+            double objectDiameter,
             double objectTemperature,
             string discoverySourceName,
             DateTime? objectDiscoveryDate = null,
             bool saveChangesImmediately = true)
         {
             //get discovery source optional
-            var discoverySource = 
+            var discoverySource =
                 await GetObjectDiscoverySourceByNameAsync(discoverySourceName);
 
             //try get celestial object
-            var celestialObjectOptional = 
+            var celestialObjectOptional =
                 await FindCelestialObjectAsync(objectName);
 
             //set discovery date
             var discoveryDate = objectDiscoveryDate ?? DateTime.UtcNow;
 
             //create a function to be called with different actions (Add or update)
-            Func<Task> addOrUpdate = 
+            Func<Task> addOrUpdate =
                 celestialObjectOptional.Any()
                     //if object already exists into database just add an extra discovery source to it
                     ? async () => await AddExtraDiscoverySourceAsync(
-                            discoverySource, 
+                            discoverySource.DiscoverySourceId,
                             celestialObjectOptional.Single(),
                             discoveryDate)
                     //otherwise create the object
@@ -75,35 +69,55 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
             //if we should not save changes immediately return
             if (!saveChangesImmediately)
             {
-                return;;
+                return;
             }
 
             //commit
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<IEnumerable<CelestialObject>> GetAllAsync()
-        {
-            return await _celestialObjectRepository
+        public async Task<IEnumerable<CelestialObject>> GetAllAsync() =>
+            await _unitOfWork.CelestialObjectRepo
                 .GetAllAsQueryable()
+                .Include(x => x.CelestialObjectDiscoveries)
+                .ThenInclude(x => x.DiscoverySource)
                 .ToListAsync();
-        }
 
-        public Task<IEnumerable<CelestialObject>> GetAllObjectByTypeAsync(CelestialObjectType objectType)
+        public async Task<IEnumerable<CelestialObject>> 
+            GetAllObjectByTypeAsync(CelestialObjectType objectType) =>
+                await _unitOfWork.CelestialObjectRepo
+                    .GetAllAsQueryable()
+                    .Where(c => c.Type == objectType)
+                    .Include(c => c.CelestialObjectDiscoveries)
+                    .ThenInclude(cod => cod.DiscoverySource)
+                    .ToListAsync();
+
+        public async Task<Maybe<CelestialObject>>
+            FindCelestialObjectAsync(string objectName)
         {
-            throw new System.NotImplementedException();
+            //get celestial object
+            var celestialObject = await _unitOfWork.CelestialObjectRepo
+                .GetAllAsQueryable()
+                .Where(c => c.Name == objectName)
+                .Include(c => c.CelestialObjectDiscoveries)
+                .ThenInclude(cod => cod.DiscoverySource)
+                .FirstOrDefaultAsync();
+
+            //get an empty maybe or an maybe with object in it
+            return celestialObject == null
+                ? Maybe.None<CelestialObject>()
+                : Maybe.Some(celestialObject);
         }
 
-        public Task<Maybe<CelestialObject>> 
-            FindCelestialObjectAsync(string objectName) =>
-                _celestialObjectRepository
-                    .FindSingleAsync(
-                        x=> x.Name == objectName,
-                        x => x.CelestialObjectDiscoveries);
-
-        public Task<IEnumerable<CelestialObject>> GetObjectsDiscoveredByCountryAsync(string countryName)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task<IEnumerable<CelestialObject>>
+            GetObjectsDiscoveredByCountryAsync(string countryName) => 
+                await _unitOfWork.CelestialObjectRepo
+                    .GetAllAsQueryable()
+                    .Include(x => x.CelestialObjectDiscoveries)
+                    .ThenInclude(cod => cod.DiscoverySource)
+                    .Where(c => c
+                        .CelestialObjectDiscoveries
+                        .Any(cod => cod.DiscoverySource.StateOwner == countryName))
+                    .ToListAsync();
     }
 }
