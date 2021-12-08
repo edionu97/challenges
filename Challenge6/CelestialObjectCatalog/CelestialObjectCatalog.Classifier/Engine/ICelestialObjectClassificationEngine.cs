@@ -3,7 +3,7 @@ using CelestialObjectCatalog.Persistence.Models.Enums;
 
 namespace CelestialObjectCatalog.Classifier.Engine
 {
-    public interface ICelestialObjectClassifier
+    public interface ICelestialObjectClassificationEngine
     {
         /// <summary>
         /// This method is used for classifying an unclassified object

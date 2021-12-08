@@ -6,11 +6,11 @@ using CelestialObjectCatalog.Persistence.Models.Enums;
 
 namespace CelestialObjectCatalog.Classifier.Engine.Impl
 {
-    public class CelestialObjectClassifier : ICelestialObjectClassifier
+    public class CelestialObjectClassificationEngine : ICelestialObjectClassificationEngine
     {
         private readonly IEnumerable<ICelestialObjectClassificationRule> _classificationRules;
 
-        public CelestialObjectClassifier(
+        public CelestialObjectClassificationEngine(
             IEnumerable<ICelestialObjectClassificationRule> classificationRules)
         {
             //classification rule
