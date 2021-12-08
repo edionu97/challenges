@@ -90,8 +90,11 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
                 EquatorialDiameter = objectDiameter,
                 Mass = objectMass,
                 SurfaceTemperature = objectTemperature,
-                Type = CelestialObjectType.Unknown
             };
+
+            //set the object's type
+            @object.Type =
+                _classificationEngine.Classify(@object);
 
             //add discovery
             @object
@@ -108,6 +111,5 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
                 .CelestialObjectRepo
                 .AddAsync(@object);
         }
-
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using CelestialObjectCatalog.Classifier.Engine;
 using Microsoft.EntityFrameworkCore;
 using CelestialObjectCatalog.Utility.Items;
 using CelestialObjectCatalog.Services.Source;
@@ -18,11 +19,15 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
 
         private readonly IDiscoverySourceService _discoverySourceService;
 
+        private readonly ICelestialObjectClassificationEngine _classificationEngine;
+
         public CelestialObjectService(
             IUnitOfWork unitOfWork,
-            IDiscoverySourceService discoverySourceService)
+            IDiscoverySourceService discoverySourceService,
+            ICelestialObjectClassificationEngine classificationEngine)
         {
             _unitOfWork = unitOfWork;
+            _classificationEngine = classificationEngine;
             _discoverySourceService = discoverySourceService;
         }
 

@@ -136,18 +136,18 @@ namespace CelestialObject.ConsoleApp
 
             var classifier = container.Resolve<ICelestialObjectClassificationEngine>();
 
-          
 
-            var r = classifier.Classify(new CelestialObject()
-            {
-                Name = "Kepler-37b",
-                Mass = BigDecimal.Parse("1.3e40"),
-                EquatorialDiameter = BigDecimal.Parse("11600000"),
-                SurfaceTemperature = BigDecimal.Parse("29000"),
-            });
 
-            //await discoverySourceService.AddDiscoverySourceAsync("ana", DateTime.Now,
-            //    DiscoverySourceType.GroundTelescope, "USA");
+            await celestialObjectService.AddAsync(
+                "X1 Messier 87",
+                BigDecimal.Parse("1.3e40"),
+                BigDecimal.Parse("11600000"),
+                BigDecimal.Parse("2000"),
+                "ALMA",
+                DateTime.Parse("2017-12-10"));
+
+
+
 
             //await celestialObjectService.AddAsync(
             //    "celestial",
