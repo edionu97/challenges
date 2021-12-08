@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CelestialObjectCatalog.Persistence.Models.Enums;
 using CelestialObjectCatalog.Utility.Items;
+using Deveel.Math;
 
 namespace CelestialObjectCatalog.Services.Celestial
 {
@@ -22,9 +23,9 @@ namespace CelestialObjectCatalog.Services.Celestial
         /// <returns>A task</returns>
         public Task AddAsync(
             string objectName,
-            double objectMass,
-            double objectDiameter,
-            double objectTemperature,
+            BigDecimal objectMass,
+            BigDecimal objectDiameter,
+            BigDecimal objectTemperature,
             string discoverySourceName,
             DateTime? objectDiscoveryDate = null,
             bool saveChangesImmediately = true);

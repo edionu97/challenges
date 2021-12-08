@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="dmath.core" Version="1.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CelestialObjectCatalog.Utility\CelestialObjectCatalog.Utility.csproj" />
   </ItemGroup>
 

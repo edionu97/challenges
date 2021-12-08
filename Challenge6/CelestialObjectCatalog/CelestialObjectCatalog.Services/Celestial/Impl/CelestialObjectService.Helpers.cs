@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CelestialObjectCatalog.Persistence.Models;
 using CelestialObjectCatalog.Persistence.Exceptions;
 using CelestialObjectCatalog.Persistence.Models.Enums;
+using Deveel.Math;
 
 namespace CelestialObjectCatalog.Services.Celestial.Impl
 {
@@ -76,9 +77,9 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
 
         private async Task CreateCelestialObjectAsync(
             string objectName,
-            double objectMass,
-            double objectDiameter,
-            double objectTemperature,
+            BigDecimal objectMass,
+            BigDecimal objectDiameter,
+            BigDecimal objectTemperature,
             DiscoverySource discoverySource,
             DateTime objectDiscoveryDate)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CelestialObjectCatalog.Utility.Attributes;
 using CelestialObjectCatalog.Persistence.Models.Enums;
+using Deveel.Math;
 
 namespace CelestialObjectCatalog.Persistence.Models
 {
@@ -18,11 +19,11 @@ namespace CelestialObjectCatalog.Persistence.Models
 
         public string Name { get; set; }
 
-        public double Mass { get; set; }
+        public BigDecimal Mass { get; set; }
 
-        public double EquatorialDiameter { get; set; }
+        public BigDecimal EquatorialDiameter { get; set; }
 
-        public double SurfaceTemperature { get; set; }
+        public BigDecimal SurfaceTemperature { get; set; }
 
         public CelestialObjectType Type { get; set; }
 

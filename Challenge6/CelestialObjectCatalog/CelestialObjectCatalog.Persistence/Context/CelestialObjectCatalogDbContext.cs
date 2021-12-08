@@ -1,7 +1,9 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using CelestialObjectCatalog.Persistence.Models;
-using Microsoft.Extensions.Logging;
+using Deveel.Math;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CelestialObjectCatalog.Persistence.Context
 {
@@ -25,17 +27,23 @@ namespace CelestialObjectCatalog.Persistence.Context
             //enable logging
             optionsBuilder
                 .LogTo(
-                    Console.WriteLine, 
+                    Console.WriteLine,
                     new[]
                     {
                         DbLoggerCategory.Database.Command.Name
-                    }, 
+                    },
                     LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //create bif decimal value converter
+            var bigDecimalValueConverter =
+                new ValueConverter<BigDecimal, string>(
+                    model => model.ToString(),
+                    provider => BigDecimal.Parse(provider));
+                    
             //discovery source
             modelBuilder
                 .Entity<DiscoverySource>(entity =>
@@ -89,6 +97,19 @@ namespace CelestialObjectCatalog.Persistence.Context
                     entity
                         .HasIndex(x => x.Name)
                         .IsUnique();
+
+                    //set the value converters (store in database as string and in model as big decimal)
+                    entity
+                        .Property(x => x.Mass)
+                        .HasConversion(bigDecimalValueConverter);
+
+                    entity
+                        .Property(x => x.EquatorialDiameter)
+                        .HasConversion(bigDecimalValueConverter);
+
+                    entity
+                        .Property(x => x.SurfaceTemperature)
+                        .HasConversion(bigDecimalValueConverter);
                 });
 
             //celestial object discovery

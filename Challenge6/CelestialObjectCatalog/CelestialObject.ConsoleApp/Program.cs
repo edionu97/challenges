@@ -8,6 +8,7 @@ using CelestialObjectCatalog.Classifier.Rules;
 using CelestialObjectCatalog.Classifier.Rules.Impl;
 using CelestialObjectCatalog.Persistence.Context;
 using CelestialObjectCatalog.Persistence.Models;
+using CelestialObjectCatalog.Persistence.Models.Enums;
 using CelestialObjectCatalog.Persistence.Repository;
 using CelestialObjectCatalog.Persistence.Repository.Impl;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
@@ -21,7 +22,6 @@ using CelestialObjectCatalog.Services.Statistics.Impl;
 using Deveel.Math;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using CelestialObject = CelestialObjectCatalog.Persistence.Models.CelestialObject;
 
 namespace CelestialObject.ConsoleApp
 {
@@ -135,13 +135,17 @@ namespace CelestialObject.ConsoleApp
 
             var classifier = container.Resolve<ICelestialObjectClassifier>();
 
-            var aa = BigDecimal.Parse("345e540000");
+            //await discoverySourceService.AddDiscoverySourceAsync("ana", DateTime.Now,
+            //    DiscoverySourceType.GroundTelescope, "USA");
 
-            var item = BigDecimal.Parse("1");
+            //await celestialObjectService.AddAsync(
+            //    "celestial",
+            //    BigDecimal.Parse("1254e24560"),
+            //    new BigDecimal(250)
+            //    , new BigDecimal(250),
+            //    "ana");
 
-            var b = BigMath.Divide(item, aa, MathContext.Decimal128);
-
-
+            var aaa = await celestialObjectService.GetAllAsync();
         }
 
         private static Expression<Func<DiscoverySource, T>> S<T>(Expression<Func<DiscoverySource, T>> x)
