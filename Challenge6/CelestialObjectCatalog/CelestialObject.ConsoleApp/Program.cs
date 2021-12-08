@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Numerics;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Autofac;
+using CelestialObjectCatalog.Classifier.Engine;
+using CelestialObjectCatalog.Classifier.Engine.Impl;
+using CelestialObjectCatalog.Classifier.Rules;
+using CelestialObjectCatalog.Classifier.Rules.Impl;
 using CelestialObjectCatalog.Persistence.Context;
 using CelestialObjectCatalog.Persistence.Models;
-using CelestialObjectCatalog.Persistence.Models.Enums;
 using CelestialObjectCatalog.Persistence.Repository;
 using CelestialObjectCatalog.Persistence.Repository.Impl;
-using CelestialObjectCatalog.Persistence.Repository.Impl.Abstract;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
 using CelestialObjectCatalog.Persistence.UnitOfWork.Impl;
 using CelestialObjectCatalog.Services.Celestial;
@@ -19,10 +18,10 @@ using CelestialObjectCatalog.Services.Source;
 using CelestialObjectCatalog.Services.Source.Impl;
 using CelestialObjectCatalog.Services.Statistics;
 using CelestialObjectCatalog.Services.Statistics.Impl;
-using CelestialObjectCatalog.Utility.Helpers;
+using Deveel.Math;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+using CelestialObject = CelestialObjectCatalog.Persistence.Models.CelestialObject;
 
 namespace CelestialObject.ConsoleApp
 {
@@ -109,6 +108,22 @@ namespace CelestialObject.ConsoleApp
                 .As<IStatisticsService>()
                 .SingleInstance();
 
+            containerBuilder
+                .RegisterType<StarClassificationRule>()
+                .As<ICelestialObjectClassificationRule>();
+
+            containerBuilder
+                .RegisterType<PlanetClassificationRule>()
+                .As<ICelestialObjectClassificationRule>();
+
+            containerBuilder
+                .RegisterType<BlackHoleClassificationRule>()
+                .As<ICelestialObjectClassificationRule>();
+
+            containerBuilder
+                .RegisterType<CelestialObjectClassifier>()
+                .As<ICelestialObjectClassifier>();
+
 
             var container = containerBuilder.Build();
 
@@ -118,19 +133,15 @@ namespace CelestialObject.ConsoleApp
 
             var discoverySourceService = container.Resolve<IDiscoverySourceService>();
 
+            var classifier = container.Resolve<ICelestialObjectClassifier>();
 
-            await celestialObjectService.AddAsync(
-                "celestial1", 
-                100, 
-                100, 
-                100, 
-                "d2", 
-                null,
-                false);
+            var aa = BigDecimal.Parse("345e540000");
+
+            var item = BigDecimal.Parse("1");
+
+            var b = BigMath.Divide(item, aa, MathContext.Decimal128);
 
 
-
-            await container.Resolve<IUnitOfWork>().CommitAsync();
         }
 
         private static Expression<Func<DiscoverySource, T>> S<T>(Expression<Func<DiscoverySource, T>> x)
