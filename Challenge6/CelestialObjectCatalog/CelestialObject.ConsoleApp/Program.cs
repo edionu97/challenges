@@ -122,8 +122,8 @@ namespace CelestialObject.ConsoleApp
                 .As<ICelestialObjectClassificationRule>();
 
             containerBuilder
-                .RegisterType<CelestialObjectClassifier>()
-                .As<ICelestialObjectClassifier>();
+                .RegisterType<CelestialObjectClassificationEngine>()
+                .As<ICelestialObjectClassificationEngine>();
 
 
             var container = containerBuilder.Build();
@@ -134,7 +134,7 @@ namespace CelestialObject.ConsoleApp
 
             var discoverySourceService = container.Resolve<IDiscoverySourceService>();
 
-            var classifier = container.Resolve<ICelestialObjectClassifier>();
+            var classifier = container.Resolve<ICelestialObjectClassificationEngine>();
 
           
 

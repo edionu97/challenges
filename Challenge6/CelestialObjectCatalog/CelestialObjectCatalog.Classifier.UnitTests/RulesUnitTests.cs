@@ -12,7 +12,7 @@ namespace CelestialObjectCatalog.Classifier.UnitTests
 {
     public class RulesUnitTests
     {
-        private readonly ICelestialObjectClassifier _sut;
+        private readonly ICelestialObjectClassificationEngine _sut;
 
         public RulesUnitTests()
         {
@@ -25,7 +25,7 @@ namespace CelestialObjectCatalog.Classifier.UnitTests
             };
 
             //declare sut
-            _sut = new CelestialObjectClassifier(rules);
+            _sut = new CelestialObjectClassificationEngine(rules);
         }
 
         [Theory]
