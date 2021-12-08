@@ -49,7 +49,7 @@ namespace CelestialObjectCatalog.Services.Celestial
         /// <param name="objectName">The name of the object</param>
         /// <returns>A maybe which can or cannot contain an element</returns>
         public Task<Maybe<CelestialObject>> 
-            FindCelestialObjectAsync(string objectName);
+            FindCelestialObjectByNameAsync(string objectName);
 
         /// <summary>
         /// Get a list containing all the object discovered by a particular country

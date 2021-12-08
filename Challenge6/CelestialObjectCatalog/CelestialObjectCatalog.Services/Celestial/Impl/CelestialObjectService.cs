@@ -40,7 +40,7 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
 
             //try get celestial object
             var celestialObjectOptional =
-                await FindCelestialObjectAsync(objectName);
+                await FindCelestialObjectByNameAsync(objectName);
 
             //set discovery date
             var discoveryDate = objectDiscoveryDate ?? DateTime.UtcNow;
@@ -50,17 +50,17 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
                 celestialObjectOptional.Any()
                     //if object already exists into database just add an extra discovery source to it
                     ? async () => await AddExtraDiscoverySourceAsync(
-                            discoverySource.DiscoverySourceId,
-                            celestialObjectOptional.Single(),
-                            discoveryDate)
+                        discoverySource.DiscoverySourceId,
+                        celestialObjectOptional.Single(),
+                        discoveryDate)
                     //otherwise create the object
                     : async () => await CreateCelestialObjectAsync(
-                            objectName,
-                            objectMass,
-                            objectDiameter,
-                            objectTemperature,
-                            discoverySource,
-                            discoveryDate);
+                        objectName,
+                        objectMass,
+                        objectDiameter,
+                        objectTemperature,
+                        discoverySource,
+                        discoveryDate);
 
             //call the method
             await addOrUpdate();
@@ -82,7 +82,7 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
                 .ThenInclude(x => x.DiscoverySource)
                 .ToListAsync();
 
-        public async Task<IEnumerable<CelestialObject>> 
+        public async Task<IEnumerable<CelestialObject>>
             GetAllObjectByTypeAsync(CelestialObjectType objectType) =>
                 await _unitOfWork.CelestialObjectRepo
                     .GetAllAsQueryable()
@@ -92,7 +92,7 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
                     .ToListAsync();
 
         public async Task<Maybe<CelestialObject>>
-            FindCelestialObjectAsync(string objectName)
+            FindCelestialObjectByNameAsync(string objectName)
         {
             //get celestial object
             var celestialObject = await _unitOfWork.CelestialObjectRepo
@@ -109,7 +109,7 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
         }
 
         public async Task<IEnumerable<CelestialObject>>
-            GetObjectsDiscoveredByCountryAsync(string countryName) => 
+            GetObjectsDiscoveredByCountryAsync(string countryName) =>
                 await _unitOfWork.CelestialObjectRepo
                     .GetAllAsQueryable()
                     .Include(x => x.CelestialObjectDiscoveries)

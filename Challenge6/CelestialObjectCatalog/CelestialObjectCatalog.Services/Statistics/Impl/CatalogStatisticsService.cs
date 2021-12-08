@@ -36,7 +36,7 @@ namespace CelestialObjectCatalog.Services.Statistics.Impl
                 return Enumerable.Empty<(string CountryName, int ObjectsDiscovered)>();
             }
 
-            //get no of maximum discovery
+            //get no of maximum discoveries by a country
             var maximumDiscoveries = allObjectTypeDiscoveries
                 .GroupBy(x => x.DiscoverySource.StateOwner)
                 .Max(x => x.Count());

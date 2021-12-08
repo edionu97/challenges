@@ -49,22 +49,22 @@ namespace CelestialObject.ConsoleApp
             Expression<Func<DiscoverySource, object>> x = y => y.Name;
 
             var a = x.ToString();
-            
+
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder
-                .Register( _ =>
-                {
+                .Register(_ =>
+               {
                     //create the builder
                     var builder = new DbContextOptionsBuilder<CelestialObjectCatalogDbContext>();
 
                     //use sql server
                     builder.UseSqlServer(
-                        "Data Source=DESKTOP-VQ4KD11;Initial Catalog=CelestialObjectCatalog;Integrated Security=True");
+                       "Data Source=DESKTOP-VQ4KD11;Initial Catalog=CelestialObjectCatalog;Integrated Security=True");
 
                     //get options
                     return builder.Options;
-                })
+               })
                 .SingleInstance();
 
 
@@ -112,22 +112,25 @@ namespace CelestialObject.ConsoleApp
 
             var container = containerBuilder.Build();
 
-            var service = container.Resolve<IStatisticsService>();
+            var statisticsService = container.Resolve<IStatisticsService>();
+
+            var celestialObjectService = container.Resolve<ICelestialObjectService>();
+
+            var discoverySourceService = container.Resolve<IDiscoverySourceService>();
 
 
-            await container.Resolve<ICelestialObjectService>().AddAsync(
-                "aurora 3",
-                2.5e24,
-                24410000,
-                9800,
-                "Observatory"
-            );
+            await celestialObjectService.AddAsync(
+                "celestial1", 
+                100, 
+                100, 
+                100, 
+                "d2", 
+                null,
+                false);
 
 
-            var l = await service
-                .FindDiscoverySourcesWithMostObjectTypeDiscoveriesAsync(CelestialObjectType.Unknown);
 
-
+            await container.Resolve<IUnitOfWork>().CommitAsync();
         }
 
         private static Expression<Func<DiscoverySource, T>> S<T>(Expression<Func<DiscoverySource, T>> x)
