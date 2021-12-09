@@ -10,6 +10,7 @@ using CelestialObjectCatalog.WebApi.RequestModel;
 using CelestialObjectCatalog.Persistence.Exceptions;
 using CelestialObjectCatalog.Persistence.Models.Enums;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
+using Microsoft.Extensions.Logging;
 
 namespace CelestialObjectCatalog.WebApi.Controllers
 {
@@ -21,10 +22,14 @@ namespace CelestialObjectCatalog.WebApi.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
 
+        private readonly ILogger<CelestialObjectController> _logger;
+
         public CelestialObjectController(
             ICelestialObjectService celestialObjectService,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            ILogger<CelestialObjectController> logger)
         {
+            _logger = logger;
             _unitOfWork = unitOfWork;
             _celestialObjectService = celestialObjectService;
         }
@@ -56,6 +61,17 @@ namespace CelestialObjectCatalog.WebApi.Controllers
             //ensure we have only one filtering
             if (notNullProperties.Count > 1)
             {
+                //get property names
+                var propNames = string
+                    .Join(
+                        ',', 
+                        notNullProperties.Select(x => x.Name));
+
+                //write not null properties
+                _logger
+                    .LogError(
+                        $"More than one filtering property encountered: [{propNames}]");
+
                 return BadRequest("More than one filter parameter encountered, use one single filter parameter");
             }
 

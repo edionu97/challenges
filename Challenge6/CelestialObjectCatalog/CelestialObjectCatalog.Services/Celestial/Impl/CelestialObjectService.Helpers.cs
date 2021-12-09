@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CelestialObjectCatalog.Persistence.Models;
 using CelestialObjectCatalog.Persistence.Exceptions;
-using CelestialObjectCatalog.Persistence.Models.Enums;
 using Deveel.Math;
+using Microsoft.Extensions.Logging;
 
 namespace CelestialObjectCatalog.Services.Celestial.Impl
 {
@@ -18,15 +18,26 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
 
             try
             {
+                //log info
+                if (!optionalSource.Any())
+                {
+                    //log info
+                    _logger?
+                        .LogWarning(
+                            $"No discovery source with exact name = '[{namePattern}]'" +
+                            $" could be located, trying using partial name...");
+                }
+
                 //if there is no source present by exact name, try with partial names
                 optionalSource = optionalSource.Any()
                     ? optionalSource
                     : await _discoverySourceService
                         .FindDiscoverySourceByPartialName(namePattern);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
-                //ignore
+                //log error
+                _logger.LogError(e.Message);
             }
 
             //perform checking
@@ -46,6 +57,12 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
             CelestialObject celestialObject,
             DateTime discoveryDate)
         {
+            //loge info
+            _logger?
+                .LogInformation(
+                    "Celestial object already inserted into database...," +
+                    " trying to add an extra discovery source to object");
+
             //check if object is already discovered
             var isAlreadyDiscovered =
                 celestialObject
@@ -83,6 +100,11 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
             DiscoverySource discoverySource,
             DateTime objectDiscoveryDate)
         {
+            //log information
+            _logger?
+                .LogInformation(
+                    "Celestial object does not exist in database..., trying to insert it");
+
             //create celestial object
             var @object = new CelestialObject
             {

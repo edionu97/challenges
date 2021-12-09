@@ -5,17 +5,22 @@ using CelestialObjectCatalog.Utility.Items;
 using CelestialObjectCatalog.Persistence.Models;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
 using CelestialObjectCatalog.Persistence.Models.Enums;
+using Microsoft.Extensions.Logging;
 
 namespace CelestialObjectCatalog.Services.Source.Impl
 {
     public class DiscoverySourceService : IDiscoverySourceService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<DiscoverySourceService> _logger;
 
 
-        public DiscoverySourceService(IUnitOfWork unitOfWork)
+        public DiscoverySourceService(
+            IUnitOfWork unitOfWork, 
+            ILogger<DiscoverySourceService> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task AddDiscoverySourceAsync(
@@ -42,8 +47,16 @@ namespace CelestialObjectCatalog.Services.Source.Impl
             //check if changes should be saved
             if (!saveChangesImmediately)
             {
+                //log info
+                _logger?
+                    .LogInformation("Changes will be committed latter");
+
                 return;
             }
+
+            //log info
+            _logger?
+                .LogInformation("Changes will be committed to database...");
 
             //commit changes
             await _unitOfWork.CommitAsync();

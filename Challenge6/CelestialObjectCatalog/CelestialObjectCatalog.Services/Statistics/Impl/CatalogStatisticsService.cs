@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
 using CelestialObjectCatalog.Persistence.Models.Enums;
+using Microsoft.Extensions.Logging;
 
 namespace CelestialObjectCatalog.Services.Statistics.Impl
 {
@@ -12,9 +13,12 @@ namespace CelestialObjectCatalog.Services.Statistics.Impl
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CatalogStatisticsService(IUnitOfWork unitOfWork)
+        private readonly ILogger<CatalogStatisticsService> _logger;
+
+        public CatalogStatisticsService(IUnitOfWork unitOfWork, ILogger<CatalogStatisticsService> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<(string CountryName, int ObjectsDiscovered)>> 
@@ -33,6 +37,12 @@ namespace CelestialObjectCatalog.Services.Statistics.Impl
             //if there are no discoveries return an empty list
             if (!allObjectTypeDiscoveries.Any())
             {
+                //log info
+                _logger?
+                    .LogInformation(
+                        $"No objects of {objectType} could be found in repository...");
+
+                //return empty list
                 return Enumerable.Empty<(string CountryName, int ObjectsDiscovered)>();
             }
 
@@ -40,6 +50,10 @@ namespace CelestialObjectCatalog.Services.Statistics.Impl
             var maximumDiscoveries = allObjectTypeDiscoveries
                 .GroupBy(x => x.DiscoverySource.StateOwner)
                 .Max(x => x.Count());
+
+            //log info
+            _logger?
+                .LogInformation($"Maximum number of {objectType}s discoveries is: {maximumDiscoveries}");
 
             //return all countries with maximum discovery
             return allObjectTypeDiscoveries

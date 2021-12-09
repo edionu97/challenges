@@ -25,7 +25,7 @@ namespace CelestialObjectCatalog.Classifier.UnitTests
             };
 
             //declare sut
-            _sut = new CelestialObjectClassificationEngine(rules);
+            _sut = new CelestialObjectClassificationEngine(rules, null);
         }
 
         [Theory]

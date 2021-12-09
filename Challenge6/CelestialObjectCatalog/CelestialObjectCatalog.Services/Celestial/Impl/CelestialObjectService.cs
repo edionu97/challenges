@@ -10,12 +10,15 @@ using CelestialObjectCatalog.Persistence.Models;
 using CelestialObjectCatalog.Persistence.UnitOfWork;
 using CelestialObjectCatalog.Persistence.Models.Enums;
 using Deveel.Math;
+using Microsoft.Extensions.Logging;
 
 namespace CelestialObjectCatalog.Services.Celestial.Impl
 {
     public partial class CelestialObjectService : ICelestialObjectService
     {
         private readonly IUnitOfWork _unitOfWork;
+
+        private readonly ILogger<CelestialObjectService> _logger;
 
         private readonly IDiscoverySourceService _discoverySourceService;
 
@@ -24,8 +27,10 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
         public CelestialObjectService(
             IUnitOfWork unitOfWork,
             IDiscoverySourceService discoverySourceService,
+            ILogger<CelestialObjectService> logger,
             ICelestialObjectClassificationEngine classificationEngine)
         {
+            _logger = logger;
             _unitOfWork = unitOfWork;
             _classificationEngine = classificationEngine;
             _discoverySourceService = discoverySourceService;
@@ -74,8 +79,15 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
             //if we should not save changes immediately return
             if (!saveChangesImmediately)
             {
+                //log info
+                _logger?
+                    .LogInformation("Changes will be committed latter");
                 return;
             }
+
+            //log info
+            _logger?
+                .LogInformation("Changes will be committed to database...");
 
             //commit
             await _unitOfWork.CommitAsync();
