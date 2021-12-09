@@ -82,7 +82,8 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
         }
 
         public async Task<IEnumerable<CelestialObject>> GetAllAsync() =>
-            await _unitOfWork.CelestialObjectRepo
+            await _unitOfWork
+                .CelestialObjectRepo
                 .GetAllAsQueryable()
                 .Include(x => x.CelestialObjectDiscoveries)
                 .ThenInclude(x => x.DiscoverySource)
@@ -90,7 +91,8 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
 
         public async Task<IEnumerable<CelestialObject>>
             GetAllObjectByTypeAsync(CelestialObjectType objectType) =>
-                await _unitOfWork.CelestialObjectRepo
+                await _unitOfWork
+                    .CelestialObjectRepo
                     .GetAllAsQueryable()
                     .Where(c => c.Type == objectType)
                     .Include(c => c.CelestialObjectDiscoveries)
@@ -101,7 +103,8 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
             FindCelestialObjectByNameAsync(string objectName)
         {
             //get celestial object
-            var celestialObject = await _unitOfWork.CelestialObjectRepo
+            var celestialObject = await _unitOfWork
+                .CelestialObjectRepo
                 .GetAllAsQueryable()
                 .Where(c => c.Name == objectName)
                 .Include(c => c.CelestialObjectDiscoveries)
@@ -116,13 +119,13 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
 
         public async Task<IEnumerable<CelestialObject>>
             GetObjectsDiscoveredByCountryAsync(string countryName) =>
-                await _unitOfWork.CelestialObjectRepo
+                await _unitOfWork
+                    .CelestialObjectRepo
                     .GetAllAsQueryable()
-                    .Include(x => x.CelestialObjectDiscoveries)
-                    .ThenInclude(cod => cod.DiscoverySource)
-                    .Where(c => c
+                    .Include(c => c
                         .CelestialObjectDiscoveries
-                        .Any(cod => cod.DiscoverySource.StateOwner == countryName))
+                        .Where(cod => cod.DiscoverySource.StateOwner == countryName))
+                    .ThenInclude(cod => cod.DiscoverySource)
                     .ToListAsync();
     }
 }

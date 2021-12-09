@@ -137,14 +137,8 @@ namespace CelestialObject.ConsoleApp
             var classifier = container.Resolve<ICelestialObjectClassificationEngine>();
 
 
-
-            await celestialObjectService.AddAsync(
-                "X1 Messier 87",
-                BigDecimal.Parse("1.3e40"),
-                BigDecimal.Parse("11600000"),
-                BigDecimal.Parse("2000"),
-                "ALMA",
-                DateTime.Parse("2017-12-10"));
+            var aaa = 
+                await celestialObjectService.GetObjectsDiscoveredByCountryAsync("Chile");
 
 
 
