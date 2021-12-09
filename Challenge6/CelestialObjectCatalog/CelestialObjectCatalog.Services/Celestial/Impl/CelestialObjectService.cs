@@ -122,6 +122,9 @@ namespace CelestialObjectCatalog.Services.Celestial.Impl
                 await _unitOfWork
                     .CelestialObjectRepo
                     .GetAllAsQueryable()
+                    .Where(c => c
+                        .CelestialObjectDiscoveries
+                        .Any(cod => cod.DiscoverySource.StateOwner == countryName))
                     .Include(c => c
                         .CelestialObjectDiscoveries
                         .Where(cod => cod.DiscoverySource.StateOwner == countryName))

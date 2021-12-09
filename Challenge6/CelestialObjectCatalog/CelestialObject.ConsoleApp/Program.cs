@@ -138,7 +138,7 @@ namespace CelestialObject.ConsoleApp
 
 
             var aaa = 
-                await celestialObjectService.GetObjectsDiscoveredByCountryAsync("Chile");
+                await celestialObjectService.GetObjectsDiscoveredByCountryAsync("USA");
 
 
 
