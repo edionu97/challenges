@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CelestialObjectCatalog.WebApi.Converters;
 using CelestialObjectCatalog.WebApi.IoC;
 
 namespace CelestialObjectCatalog.WebApi
@@ -25,7 +27,22 @@ namespace CelestialObjectCatalog.WebApi
             //set AutoFac as dependency container
             services.AddAutofac();
 
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    //add options for displaying enums
+                    options
+                        .JsonSerializerOptions
+                        .Converters
+                        .Add(new JsonStringEnumConverter());
+
+                    //add options for displaying datetime
+                    options
+                        .JsonSerializerOptions
+                        .Converters
+                        .Add(new DateTimeConverter());
+                });
 
             services.AddSwaggerGen(c => c
                 .SwaggerDoc(
@@ -39,23 +56,10 @@ namespace CelestialObjectCatalog.WebApi
 
         /// <summary>
         /// This method is called at runtime for configuring all the dependencies
-        /// Used modules for better separation of concerns in DI
         /// </summary>
         /// <param name="containerBuilder">The AutoFac container builder</param>
         public void ConfigureContainer(ContainerBuilder containerBuilder)
-        {
-            //register persistence module
-            containerBuilder
-                .RegisterModule<PersistenceModule>();
-
-            //register the classification engine module
-            containerBuilder
-                .RegisterModule<ClassificationEngineModule>();
-
-            //register service module
-            containerBuilder
-                .RegisterModule<ServiceModule>();
-        }
+            => WebApiBootstrapper.Bootstrap(containerBuilder);
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

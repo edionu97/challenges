@@ -1,10 +1,10 @@
 ﻿using Autofac;
-using CelestialObjectCatalog.Classifier.Rules;
 using CelestialObjectCatalog.Classifier.Engine;
-using CelestialObjectCatalog.Classifier.Rules.Impl;
 using CelestialObjectCatalog.Classifier.Engine.Impl;
+using CelestialObjectCatalog.Classifier.Rules;
+using CelestialObjectCatalog.Classifier.Rules.Impl;
 
-namespace CelestialObjectCatalog.WebApi.IoC
+namespace CelestialObjectCatalog.WebApi.IoC.Modules
 {
     /// <summary>
     /// This module contains all components related to classification rules

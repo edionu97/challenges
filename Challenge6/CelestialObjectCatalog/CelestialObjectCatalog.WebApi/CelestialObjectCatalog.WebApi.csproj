@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CelestialObjectCatalog.Persistence\CelestialObjectCatalog.Persistence.csproj" />
-    <ProjectReference Include="..\CelestialObjectCatalog.Services\CelestialObjectCatalog.Services.csproj" />
+    <ProjectReference Include="..\CelestialObjectCatalog.WebApi.Converters\CelestialObjectCatalog.WebApi.Converters.csproj" />
+    <ProjectReference Include="..\CelestialObjectCatalog.WebApi.IoC\CelestialObjectCatalog.WebApi.IoC.csproj" />
   </ItemGroup>
 
 </Project>

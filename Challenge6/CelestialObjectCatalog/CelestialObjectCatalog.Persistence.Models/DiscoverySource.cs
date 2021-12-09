@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using CelestialObjectCatalog.Persistence.Models.Enums;
 using CelestialObjectCatalog.Utility.Attributes;
 
@@ -13,6 +15,7 @@ namespace CelestialObjectCatalog.Persistence.Models
     // ReSharper disable once ClassNeverInstantiated.Global
     public class DiscoverySource
     {
+        [JsonIgnore]
         [UniqueIdentifier]
         public Guid DiscoverySourceId { get; set; }
 
@@ -24,6 +27,7 @@ namespace CelestialObjectCatalog.Persistence.Models
 
         public string StateOwner { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ICollection<CelestialObjectDiscovery> CelestialObjectDiscoveries { get; set; } =
             new List<CelestialObjectDiscovery>();
     }

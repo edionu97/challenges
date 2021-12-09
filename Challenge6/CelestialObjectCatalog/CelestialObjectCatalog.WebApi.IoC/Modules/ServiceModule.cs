@@ -6,7 +6,7 @@ using CelestialObjectCatalog.Services.Source.Impl;
 using CelestialObjectCatalog.Services.Statistics;
 using CelestialObjectCatalog.Services.Statistics.Impl;
 
-namespace CelestialObjectCatalog.WebApi.IoC
+namespace CelestialObjectCatalog.WebApi.IoC.Modules
 {
     /// <summary>
     /// This module contains all instances that represents a service class

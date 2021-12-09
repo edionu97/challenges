@@ -1,15 +1,15 @@
 ﻿using System;
 using Autofac;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using CelestialObjectCatalog.Persistence.Models;
 using CelestialObjectCatalog.Persistence.Context;
-using CelestialObjectCatalog.Persistence.UnitOfWork;
+using CelestialObjectCatalog.Persistence.Models;
 using CelestialObjectCatalog.Persistence.Repository;
 using CelestialObjectCatalog.Persistence.Repository.Impl;
+using CelestialObjectCatalog.Persistence.UnitOfWork;
 using CelestialObjectCatalog.Persistence.UnitOfWork.Impl;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
-namespace CelestialObjectCatalog.WebApi.IoC
+namespace CelestialObjectCatalog.WebApi.IoC.Modules
 {
     /// <summary>
     /// This module contains all instances that are related to persistence layer

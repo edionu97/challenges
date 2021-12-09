@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CelestialObjectCatalog.Classifier\CelestialObjectCatalog.Classifier.csproj" />
+    <ProjectReference Include="..\CelestialObjectCatalog.Persistence\CelestialObjectCatalog.Persistence.csproj" />
+    <ProjectReference Include="..\CelestialObjectCatalog.Services\CelestialObjectCatalog.Services.csproj" />
+  </ItemGroup>
+
+</Project>
