@@ -77,5 +77,37 @@ namespace CelestialObjectCatalog.Utility.Helpers
                       .FromResult(Maybe
                           .Some<ICollection<TResult>>(values));
                 });
+
+        /// <summary>
+        /// This function returns all the props that does not have null values
+        /// </summary>
+        /// <param name="object">The object itself</param>
+        /// <returns>A list of tuples (name and value)</returns>
+        public static IEnumerable<(string Name, object Value)> GetNotNullPropertyValues(object @object)
+        {
+            //null case
+            if (@object == null)
+            {
+                yield break;
+            }
+
+            //iterate properties
+            foreach (var propertyInfo in @object.GetType().GetProperties())
+            {
+                //get property value
+                var value = 
+                    propertyInfo
+                        .GetValue(@object);
+
+                //ignore null properties
+                if (value is null)
+                {
+                    continue;
+                }
+
+                //return the pair
+                yield return (propertyInfo.Name, value);
+            }
+        }
     }
 }

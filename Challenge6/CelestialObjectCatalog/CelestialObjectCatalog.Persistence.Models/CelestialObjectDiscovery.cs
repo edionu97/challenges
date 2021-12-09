@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using CelestialObjectCatalog.Utility.Attributes;
 
 namespace CelestialObjectCatalog.Persistence.Models
@@ -11,11 +12,16 @@ namespace CelestialObjectCatalog.Persistence.Models
     public class CelestialObjectDiscovery
     {
         [UniqueIdentifier]
+        [JsonIgnore]
         public Guid CelestialObjectId { get; set; }
+
+        [JsonIgnore]
         public CelestialObject CelestialObject { get; set; }
 
         [UniqueIdentifier]
+        [JsonIgnore]
         public Guid DiscoverySourceId { get; set; }
+
         public DiscoverySource DiscoverySource { get; set; }
 
         public  DateTime DiscoveryDate { get; set; }

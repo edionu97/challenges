@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using CelestialObjectCatalog.Utility.Attributes;
 using CelestialObjectCatalog.Persistence.Models.Enums;
 using Deveel.Math;
@@ -15,6 +16,7 @@ namespace CelestialObjectCatalog.Persistence.Models
     public class CelestialObject
     {
         [UniqueIdentifier]
+        [JsonIgnore]
         public Guid CelestialObjectId { get; set; }
 
         public string Name { get; set; }
@@ -27,6 +29,7 @@ namespace CelestialObjectCatalog.Persistence.Models
 
         public CelestialObjectType Type { get; set; }
 
+        [JsonPropertyName("discoveredBy")]
         public ICollection<CelestialObjectDiscovery> CelestialObjectDiscoveries { get; set; }
             = new List<CelestialObjectDiscovery>();
 

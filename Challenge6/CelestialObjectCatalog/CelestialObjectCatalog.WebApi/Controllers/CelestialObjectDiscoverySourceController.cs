@@ -63,9 +63,9 @@ namespace CelestialObjectCatalog.WebApi.Controllers
                             });
                         });
 
-                return Ok(new Dictionary<string, IEnumerable<DiscoverySource>>()
+                return Ok(new 
                 {
-                    ["sources"] = sources
+                    sources
                 });
             }
             catch (Exception)
@@ -94,10 +94,10 @@ namespace CelestialObjectCatalog.WebApi.Controllers
                 //make the call
                 await _discoverySourceService
                     .AddDiscoverySourceAsync(
-                        discoverySource.Name,
+                        discoverySource.Name.Trim(),
                         discoverySource.EstablishmentDate,
                         discoverySource.Type,
-                        discoverySource.StateOwner);
+                        discoverySource.StateOwner.Trim());
             }
             catch (DbException e)
             {

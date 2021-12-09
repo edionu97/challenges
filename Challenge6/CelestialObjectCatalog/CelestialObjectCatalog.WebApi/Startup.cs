@@ -42,6 +42,12 @@ namespace CelestialObjectCatalog.WebApi
                         .JsonSerializerOptions
                         .Converters
                         .Add(new DateTimeConverter());
+
+                    //add options for displaying datetime
+                    options
+                        .JsonSerializerOptions
+                        .Converters
+                        .Add(new BigDecimalConverter());
                 });
 
             services.AddSwaggerGen(c => c

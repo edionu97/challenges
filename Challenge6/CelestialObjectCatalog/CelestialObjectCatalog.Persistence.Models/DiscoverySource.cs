@@ -27,7 +27,7 @@ namespace CelestialObjectCatalog.Persistence.Models
 
         public string StateOwner { get; set; }
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonIgnore]
         public ICollection<CelestialObjectDiscovery> CelestialObjectDiscoveries { get; set; } =
             new List<CelestialObjectDiscovery>();
     }
