@@ -72,7 +72,13 @@ namespace CelestialObjectCatalog.WebApi.Controllers
                     .LogError(
                         $"More than one filtering property encountered: [{propNames}]");
 
-                return BadRequest("More than one filter parameter encountered, use one single filter parameter");
+                //add the model state error
+                ModelState
+                    .AddModelError(
+                        "queryParams", 
+                        "More than one filter parameter encountered, use one single filter parameter");
+
+                return BadRequest(ModelState);
             }
 
             //try to get all items from repository
@@ -117,20 +123,11 @@ namespace CelestialObjectCatalog.WebApi.Controllers
             }
         }
 
-
-        /// <summary>
-        /// Helper method for building the find response
-        /// </summary>
-        /// <param name="celestialObjects">A element representing the payload</param>
-        /// <returns>An Ok action result</returns>
-        private IActionResult 
-            BuildFindResponse(object celestialObjects) => Ok(new { celestialObjects });
-
         /// <summary>
         /// This methods add a single celestial object into repository
         /// </summary>
         /// <param name="addRequestModel">The request model</param>
-        /// <returns>Ok if everything is ok, Problem is there is any exception or NotFound if there does not exist any discouvery source with given name</returns>
+        /// <returns>Ok if everything is ok, Problem is there is any exception or NotFound if there does not exist any discovery source with given name</returns>
         [HttpPost("add")]
         public async Task<IActionResult>
             AddCelestialObjectAsync([FromBody] AddCelestialObjectReqModel addRequestModel)
@@ -203,5 +200,13 @@ namespace CelestialObjectCatalog.WebApi.Controllers
             //return 200 OK
             return Ok();
         }
+
+        /// <summary>
+        /// Helper method for building the find response
+        /// </summary>
+        /// <param name="celestialObjects">A element representing the payload</param>
+        /// <returns>An Ok action result</returns>
+        private IActionResult
+            BuildFindResponse(object celestialObjects) => Ok(new { celestialObjects });
     }
 }

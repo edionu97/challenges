@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using CelestialObjectCatalog.Persistence.Models.Enums;
 using CelestialObjectCatalog.Utility.Attributes;
@@ -19,12 +19,17 @@ namespace CelestialObjectCatalog.Persistence.Models
         [UniqueIdentifier]
         public Guid DiscoverySourceId { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime EstablishmentDate { get; set; }
 
+        [Required]
         public DiscoverySourceType Type { get; set; }
 
+        [Required]
         public string StateOwner { get; set; }
 
         [JsonIgnore]

@@ -17,11 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CelestialObjectCatalog.Clas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CelestialObjectCatalog.Classifier.UnitTests", "CelestialObjectCatalog.Classifier.UnitTests\CelestialObjectCatalog.Classifier.UnitTests.csproj", "{FEBD9973-C43A-49F8-B2FA-92152DF140A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelestialObjectCatalog.WebApi", "CelestialObjectCatalog.WebApi\CelestialObjectCatalog.WebApi.csproj", "{F8A8D76C-8DCD-48F8-8556-398161BD8D84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CelestialObjectCatalog.WebApi", "CelestialObjectCatalog.WebApi\CelestialObjectCatalog.WebApi.csproj", "{F8A8D76C-8DCD-48F8-8556-398161BD8D84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelestialObjectCatalog.WebApi.Converters", "CelestialObjectCatalog.WebApi.Converters\CelestialObjectCatalog.WebApi.Converters.csproj", "{15D3C19F-3CCC-4FD1-8EAC-90F6ACAFA653}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CelestialObjectCatalog.WebApi.Converters", "CelestialObjectCatalog.WebApi.Converters\CelestialObjectCatalog.WebApi.Converters.csproj", "{15D3C19F-3CCC-4FD1-8EAC-90F6ACAFA653}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelestialObjectCatalog.WebApi.IoC", "CelestialObjectCatalog.WebApi.IoC\CelestialObjectCatalog.WebApi.IoC.csproj", "{560F7696-DE49-4596-9972-F740B00C4599}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CelestialObjectCatalog.WebApi.IoC", "CelestialObjectCatalog.WebApi.IoC\CelestialObjectCatalog.WebApi.IoC.csproj", "{560F7696-DE49-4596-9972-F740B00C4599}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CelestialObjectCatalog.WebApi.Validation", "CelestialObjectCatalog.WebApi.Validation\CelestialObjectCatalog.WebApi.Validation.csproj", "{1FACE26E-94B8-4707-97ED-8AF3FC15BE40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{560F7696-DE49-4596-9972-F740B00C4599}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{560F7696-DE49-4596-9972-F740B00C4599}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{560F7696-DE49-4596-9972-F740B00C4599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FACE26E-94B8-4707-97ED-8AF3FC15BE40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FACE26E-94B8-4707-97ED-8AF3FC15BE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FACE26E-94B8-4707-97ED-8AF3FC15BE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FACE26E-94B8-4707-97ED-8AF3FC15BE40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
